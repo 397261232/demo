@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class StudentInfoListResponse {
     private List<StudentInfoResponse> studentInfoResponseList;
-    private String total;
+    private Integer total;
 
-    public String getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 

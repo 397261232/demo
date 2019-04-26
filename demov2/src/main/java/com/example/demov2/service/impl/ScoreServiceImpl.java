@@ -2,14 +2,11 @@ package com.example.demov2.service.impl;
 
 import com.example.demov2.dao.ScoreInfoDao;
 import com.example.demov2.dto.request.ListScoreRequest;
-import com.example.demov2.dto.response.ListScoreResponse;
-import com.example.demov2.dto.ScoreInfoDTO;
 import com.example.demov2.model.ScoreInfo;
 import com.example.demov2.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,46 +22,39 @@ public class ScoreServiceImpl  implements ScoreService {
     private ScoreInfoDao scoreInfoDao;
 
     @Override
-    public ListScoreResponse listScoreAllByMaster(ListScoreRequest scoreInfoDtoRequest) {
-        ListScoreResponse listScoreResponse = new ListScoreResponse();
-        List<ScoreInfoDTO> scoreInfoDTOList = new ArrayList<ScoreInfoDTO>();
+    public List<ScoreInfo> listScoreAllByMaster(ListScoreRequest scoreInfoDtoRequest) {
         List<ScoreInfo> scoreInfoExList = scoreInfoDao.listTermScoreByMaster(scoreInfoDtoRequest);
-        for (ScoreInfo si : scoreInfoExList) {
-            ScoreInfoDTO scoreInfoDto = new ScoreInfoDTO();
-            scoreInfoDto.setAvg(si.getAvg());
-            scoreInfoDto.setCourseId(si.getCourseInfo().getCourseId());
-            scoreInfoDto.setCourseName(si.getCourseInfo().getCourseName());
-            scoreInfoDto.setMax(si.getMax());
-            scoreInfoDto.setMin(si.getMin());
-            scoreInfoDto.setTerm(si.getTerm());
-            scoreInfoDTOList.add(scoreInfoDto);
-        }
-        Integer total = scoreInfoDao.countTermScoreByMaster(scoreInfoDtoRequest);
-        listScoreResponse.setScoreInfoList(scoreInfoDTOList);
-        listScoreResponse.setTotal(total);
-        return listScoreResponse;
+        return scoreInfoExList;
+    }
+
+    /**
+     * 查询教导主任查询分数总数
+     *
+     * @param scoreInfoDto
+     * @return
+     */
+    @Override
+    public Integer countScoreAllByMaster(ListScoreRequest scoreInfoDto) {
+        Integer total = scoreInfoDao.countTermScoreByMaster(scoreInfoDto);
+        return total;
     }
 
     @Override
-    public ListScoreResponse listScoreTeacherByMaster(ListScoreRequest scoreInfoDto) {
-        ListScoreResponse listScoreResponse = new ListScoreResponse();
-        List<ScoreInfoDTO> scoreInfoDTOList = new ArrayList<ScoreInfoDTO>();
+    public List<ScoreInfo> listScoreTeacherByMaster(ListScoreRequest scoreInfoDto) {
         List<ScoreInfo> scoreInfoList = scoreInfoDao.listScoreTeacher(scoreInfoDto);
-        for (ScoreInfo si : scoreInfoList) {
-            ScoreInfoDTO scoreDto = new ScoreInfoDTO();
-            scoreDto.setAvg(si.getAvg());
-            scoreDto.setCourseId(si.getCourseInfo().getCourseId());
-            scoreDto.setCourseName(si.getCourseInfo().getCourseName());
-            scoreDto.setTeacherId(si.getTeacherInfo().getTeacherId());
-            scoreDto.setTeacherName(si.getTeacherInfo().getTeacherName());
-            scoreDto.setMax(si.getMax());
-            scoreDto.setMin(si.getMin());
-            scoreInfoDTOList.add(scoreDto);
-        }
+        return scoreInfoList;
+    }
+
+    /**
+     * 教导主任查询教师分数总数
+     *
+     * @param scoreInfoDto
+     * @return
+     */
+    @Override
+    public Integer countScoreTeacherByMaster(ListScoreRequest scoreInfoDto) {
         Integer total = scoreInfoDao.countScoreTeacher(scoreInfoDto);
-        listScoreResponse.setScoreInfoList(scoreInfoDTOList);
-        listScoreResponse.setTotal(total);
-        return listScoreResponse;
+        return total;
     }
 
 }

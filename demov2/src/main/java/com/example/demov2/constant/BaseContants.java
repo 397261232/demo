@@ -9,7 +9,11 @@ package com.example.demov2.constant;
 public class BaseContants {
 
     //操作成功
-    public static final String SUCCESS = "1";
+    public static final String SUCCESS_CODE = "1";
+    //操作成功信息
+    public static final String SUCCESS_MESSAGE = "操作成功! ";
     //操作失败
-    public static final String ERROR = "0";
+    public static final String ERROR_CODE = "0";
+    //操作失败信息
+    public static final String ERROR_MESSAGE = "操作失败: ";
 }

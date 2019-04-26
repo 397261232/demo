@@ -1,19 +1,18 @@
 package com.example.demov2.service.impl;
 
 import com.example.demov2.dao.StudentInfoDao;
-import com.example.demov2.dto.*;
+import com.example.demov2.dto.StudentInfoDTO;
 import com.example.demov2.dto.request.ListScoreRequest;
-import com.example.demov2.dto.response.ListScoreResponse;
-import com.example.demov2.dto.response.StudentInfoListResponse;
-import com.example.demov2.dto.response.StudentInfoResponse;
 import com.example.demov2.model.ScoreInfo;
 import com.example.demov2.model.StudentInfo;
 import com.example.demov2.service.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * @Author: 刘子铨
@@ -27,43 +26,30 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentInfoDao studentInfoDao;
 
+    static private Logger logger = LoggerFactory.getLogger(Object.class);
 
     @Override
-    public StudentInfoResponse getStudentById(Integer id) {
-        StudentInfo op =  studentInfoDao.getStudentById(id);
-        StudentInfoResponse studentInfoResponse = new StudentInfoResponse();
-        studentInfoResponse.setStudentAge(op.getStudentAge());
-        studentInfoResponse.setStudentId(op.getStudentId());
-        studentInfoResponse.setStudentName(op.getStudentName());
-        if ("1".equals(op.getStudentSex())) {
-            studentInfoResponse.setStudentSex("男");
-        }else if ("0".equals(op.getStudentSex())) {
-            studentInfoResponse.setStudentSex("女");
-        }
-        return studentInfoResponse;
+    public StudentInfo getStudentById(Integer id) {
+        StudentInfo studentInfo =  studentInfoDao.getStudentById(id);
+        return studentInfo;
     }
 
     @Override
-    public StudentInfoListResponse listStudent(StudentInfoDTO studentInfoDto) {
-        StudentInfoListResponse studentInfoListResponse = new StudentInfoListResponse();
-        List<StudentInfoResponse> studentInfoResponseList = new ArrayList<>();
+    public List<StudentInfo> listStudent(StudentInfoDTO studentInfoDto) {
         List<StudentInfo> studentInfoList = studentInfoDao.listStudent(studentInfoDto);
-        for(StudentInfo si : studentInfoList){
-            StudentInfoResponse studentInfo = new StudentInfoResponse();
-            studentInfo.setStudentId(si.getStudentId());
-            studentInfo.setStudentAge(si.getStudentAge());
-            studentInfo.setStudentName(si.getStudentName());
-            if ("1".equals(si.getStudentSex())) {
-                studentInfo.setStudentSex("男");
-            }else if ("0".equals(si.getStudentSex())) {
-                studentInfo.setStudentSex("女");
-            }
-            studentInfoResponseList.add(studentInfo);
-        }
+        return studentInfoList;
+    }
+
+    /**
+     * 根据条件查询学生列表总数
+     *
+     * @param studentInfoDto
+     * @return
+     */
+    @Override
+    public Integer countStudentList(StudentInfoDTO studentInfoDto) {
         Integer total = studentInfoDao.countStudentList(studentInfoDto);
-        studentInfoListResponse.setStudentInfoResponseList(studentInfoResponseList);
-        studentInfoListResponse.setTotal(String.valueOf(total));
-        return studentInfoListResponse;
+        return total;
     }
 
     @Override
@@ -73,29 +59,31 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudent(StudentInfoDTO studentInfoDto) {
-        studentInfoDao.updateStudent(studentInfoDto);
+        try {
+            studentInfoDao.updateStudent(studentInfoDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
     @Override
-    public ListScoreResponse listScoreByStudent(ListScoreRequest scoreInfoDto) {
-        ListScoreResponse listScoreResponse = new ListScoreResponse();
-        List<ScoreInfoDTO> scoreInfoDTOList = new ArrayList<ScoreInfoDTO>();
+    public List<ScoreInfo> listScoreByStudent(ListScoreRequest scoreInfoDto) {
         List<ScoreInfo> scoreInfoList = studentInfoDao.listStudentScore(scoreInfoDto);
-        for (ScoreInfo si : scoreInfoList) {
-            ScoreInfoDTO scoreDto = new ScoreInfoDTO();
-            scoreDto.setAvg(si.getAvg());
-            scoreDto.setCourseId(si.getCourseInfo().getCourseId());
-            scoreDto.setCourseName(si.getCourseInfo().getCourseName());
-            scoreDto.setStudentId(si.getStudentInfo().getStudentId());
-            scoreDto.setStudentName(si.getStudentInfo().getStudentName());
-            scoreDto.setScore(si.getScore());
-            scoreDto.setTerm(si.getTerm());
-            scoreInfoDTOList.add(scoreDto);
-        }
+        return scoreInfoList;
+    }
+
+    /**
+     * 学生查询成绩信息总数
+     *
+     * @param scoreInfoDto
+     * @return
+     */
+    @Override
+    public Integer countScoreByStudent(ListScoreRequest scoreInfoDto) {
         Integer total = studentInfoDao.countStudentScore(scoreInfoDto);
-        listScoreResponse.setScoreInfoList(scoreInfoDTOList);
-        listScoreResponse.setTotal(total);
-        return listScoreResponse;
+        return total;
     }
 
 

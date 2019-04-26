@@ -1,7 +1,9 @@
 package com.example.demov2.service;
 
 import com.example.demov2.dto.request.ListScoreRequest;
-import com.example.demov2.dto.response.ListScoreResponse;
+import com.example.demov2.model.ScoreInfo;
+
+import java.util.List;
 
 /**
  * @Author: 刘子铨
@@ -16,5 +18,12 @@ public interface TeacherService {
      * @param scoreInfoDto
      * @return
      */
-    ListScoreResponse listScoreByTeacher(ListScoreRequest scoreInfoDto);
+    List<ScoreInfo> listScoreByTeacher(ListScoreRequest scoreInfoDto);
+
+    /**
+     * 教师查询分数信息总数
+     * @param scoreInfoDto
+     * @return
+     */
+    Integer countScoreByTeacher(ListScoreRequest scoreInfoDto);
 }
