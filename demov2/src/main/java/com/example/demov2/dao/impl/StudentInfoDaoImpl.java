@@ -38,7 +38,7 @@ public class StudentInfoDaoImpl implements StudentInfoDao {
 
 
     @Override
-    public StudentInfo getStudentById(Integer id) {
+    public StudentInfo readStudentById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(StudentInfo.class);
         criteria.add(Restrictions.eq("id", id));

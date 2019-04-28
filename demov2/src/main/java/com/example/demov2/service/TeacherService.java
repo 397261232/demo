@@ -12,7 +12,6 @@ import java.util.List;
  * @Date:Create: 2019/4/25 8:58
  * @Modified By:
  */
-@Transactional
 public interface TeacherService {
 
     /**

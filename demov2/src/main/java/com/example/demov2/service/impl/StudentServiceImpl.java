@@ -29,8 +29,8 @@ public class StudentServiceImpl implements StudentService {
     static private Logger logger = LoggerFactory.getLogger(Object.class);
 
     @Override
-    public StudentInfo getStudentById(Integer id) {
-        StudentInfo studentInfo =  studentInfoDao.getStudentById(id);
+    public StudentInfo readStudentById(Integer id) {
+        StudentInfo studentInfo =  studentInfoDao.readStudentById(id);
         return studentInfo;
     }
 

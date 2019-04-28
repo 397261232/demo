@@ -14,7 +14,6 @@ import java.util.List;
  * @Date:Create: 2019/4/23 15:00
  * @Modified By:
  */
-@Transactional
 public interface StudentService {
 
     /**
@@ -22,7 +21,7 @@ public interface StudentService {
      * @param id
      * @return
      */
-    StudentInfo getStudentById(Integer id);
+    StudentInfo readStudentById(Integer id);
 
     /**
      * 根据条件查询学生列表

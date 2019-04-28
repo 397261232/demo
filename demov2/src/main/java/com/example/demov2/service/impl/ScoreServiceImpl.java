@@ -6,6 +6,7 @@ import com.example.demov2.model.ScoreInfo;
 import com.example.demov2.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

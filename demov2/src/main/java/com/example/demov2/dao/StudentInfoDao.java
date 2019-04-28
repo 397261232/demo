@@ -20,7 +20,7 @@ public interface StudentInfoDao {
      * @param id
      * @return
      */
-    public StudentInfo getStudentById(Integer id);
+    public StudentInfo readStudentById(Integer id);
 
     /**
      * 查询学生列表

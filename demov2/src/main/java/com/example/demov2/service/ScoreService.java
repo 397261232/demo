@@ -12,7 +12,6 @@ import java.util.List;
  * @Date:Create: 2019/4/24 16:06
  * @Modified By:
  */
-@Transactional
 public interface ScoreService {
 
     /**

@@ -18,7 +18,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class StudentInfoController {
     public BaseResponse getStudentById(@RequestParam Integer id) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-            StudentInfo op = studentService.getStudentById(id);
+            StudentInfo op = studentService.readStudentById(id);
             StudentInfoResponse studentInfoResponse = new StudentInfoResponse();
             studentInfoResponse.setStudentAge(op.getStudentAge());
             studentInfoResponse.setStudentId(op.getStudentId());
@@ -133,7 +132,7 @@ public class StudentInfoController {
             if (!StringUtils.isEmpty(studentInfoDto.getStudentId())) {
                 existStudent.setStudentId(studentInfoDto.getStudentId());
                 List<StudentInfo> studentInfoListResponse = studentService.listStudent(existStudent);
-                StudentInfo op = studentService.getStudentById(studentInfoDto.getId());
+                StudentInfo op = studentService.readStudentById(studentInfoDto.getId());
                 if (!CollectionUtils.isEmpty(studentInfoListResponse) && !op.getStudentId().equals(studentInfoDto.getStudentId())) {
                     baseResponse.setCode(BaseContants.ERROR_CODE);
                     logger.error("学号重复");
