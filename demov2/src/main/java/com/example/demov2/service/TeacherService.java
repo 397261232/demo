@@ -2,6 +2,7 @@ package com.example.demov2.service;
 
 import com.example.demov2.dto.request.ListScoreRequest;
 import com.example.demov2.model.ScoreInfo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date:Create: 2019/4/25 8:58
  * @Modified By:
  */
+@Transactional
 public interface TeacherService {
 
     /**

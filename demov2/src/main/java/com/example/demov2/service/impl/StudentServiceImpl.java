@@ -59,13 +59,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudent(StudentInfoDTO studentInfoDto) {
-        try {
             studentInfoDao.updateStudent(studentInfoDto);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-            throw new RuntimeException();
-        }
     }
 
     @Override
